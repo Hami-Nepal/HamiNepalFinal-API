@@ -11,7 +11,7 @@ Hami Nepal focuses on supporting local community in the time of Pandemic through
 
 ## Hami Nepal Organization Profile
 
-Hami Nepal has been connecting hundreds of volunteers to local communities all overthe world since its first initiation in 2015. The emergency response program and the post-earthquake rehabilitation programs were the initial programs successfully carried out by Hami Nepal.This is a Group Volunteer Organization initiated by the youth with a vision to create sustainable in the local communities through community development. The “I to We” movement initiated by Hami Nepal is based on uniting to aid the people in need.
+Hami Nepal has been connecting hundreds of volunteers to local communities all overthe world since its first initiation in 2015. The emergency response program and the post-earthquake rehabilitation programs were the initial programs successfully carried out by Hami Nepal.This is a Group Volunteer Organization initiated by the youth with a vision to create sustainable in the local communities through community development. The “I to We” movement initiated by Hami Nepal is based on uniting to aid the people in need .
 
 ![Screenshot (13)](https://user-images.githubusercontent.com/61246422/141255667-9e43987f-c5dd-4c64-bf04-defff629dfe3.png)
 
