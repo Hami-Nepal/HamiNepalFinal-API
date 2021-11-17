@@ -55,6 +55,13 @@ router
     authController.restrictTo("admin"),
     queryController.totalDonation
   );
+router
+  .route("/totalExpenses")
+  .get(
+    authController.protect,
+    authController.restrictTo("admin"),
+    queryController.totalExpenses
+  );
 
 router.route("/average/rating").get(queryController.getAverageRating);
 

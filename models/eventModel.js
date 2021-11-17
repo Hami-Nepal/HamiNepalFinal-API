@@ -7,10 +7,14 @@ const eventSchema = new mongoose.Schema(
       type: String,
       required: [true, "An event must have a name"],
     },
+    status: {
+      type: String,
+      enum: ["ongoing", "past"],
+      default: "ongoing",
+    },
     type: {
       type: String,
-      enum: ["ongoing", "upcoming", "past"],
-      default: "upcoming",
+      required: [true, "Eevnt type is required"],
     },
     balance: {
       type: Number,
@@ -33,11 +37,6 @@ const eventSchema = new mongoose.Schema(
     description: {
       type: String,
       required: [true, "An event must have a description"],
-    },
-    status: {
-      type: String,
-      enum: ["normal", "important", "super"],
-      default: "normal",
     },
     country: {
       type: String,

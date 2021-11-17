@@ -1,5 +1,6 @@
 const Donation = require("../models/donationModel");
 const Volunteer = require("../models/volunteerModel");
+const Transparency = require("../models/transparencyModel");
 const Event = require("../models/eventModel");
 const Rating = require("../models/ratingModel");
 // const User = require("../models/userModel");
@@ -172,6 +173,32 @@ exports.totalDonation = catchAsync(async (req, res, next) => {
   ]).exec((err, result) => {
     if (err) {
       console.log(err);
+    }
+    res.status(200).json({
+      status: true,
+      data: result,
+    });
+  });
+});
+//@desc Get total expenses for all
+//GET api/v1/find/totalexpenses
+//Public
+exports.totalExpenses = catchAsync(async (req, res, next) => {
+  Transparency.aggregate([
+    {
+      $project: {
+        amount: 1,
+      },
+    },
+
+    {
+      $group: {
+        _id: null,
+        total_expenses: { $sum: "$amount" },
+      },
+    },
+  ]).exec((err, result) => {
+    if (err) {
     }
     res.status(200).json({
       status: true,

@@ -2,6 +2,7 @@ const Cause_type = require("../models/cause_typeModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
+const APIServices = require("../utils/apiServices");
 
 exports.createCause_type = catchAsync(async (req, res, next) => {
   newCause_type = await Cause_type.create(req.body);
@@ -9,7 +10,19 @@ exports.createCause_type = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllCause_type = catchAsync(async (req, res, next) => {
-  res.status(200).json(res.allqueryresults);
+  const cause_type = new APIServices(Cause_type.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const Cause_type_var = await cause_type.query;
+
+  return res.status(200).json({
+    status: "success",
+    results: Cause_type_var.length,
+    data: { Cause_type_var },
+  });
 });
 
 exports.getCause_type = catchAsync(async (req, res, next) => {
