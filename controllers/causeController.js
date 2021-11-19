@@ -54,14 +54,8 @@ exports.resizeCausePhoto = catchAsync(async (req, res, next) => {
 //GET api/v1/causes
 //Private
 exports.createCause = catchAsync(async (req, res, next) => {
-  if (req.user.role == "admin") {
-    req.body.approval = "Approved";
-    newCause = await Cause.create(req.body);
-    res.status(201).json({ status: "success", data: { newCause } });
-  } else {
-    newCause = await Cause.create(req.body);
-    res.status(201).json({ status: "success", data: { newCause } });
-  }
+  newCause = await Cause.create(req.body);
+  res.status(201).json({ status: "success", data: { newCause } });
 });
 
 //@desc Get all causes
@@ -77,10 +71,7 @@ exports.getAllCauses = catchAsync(async (req, res, next) => {
     .limitFields()
     .paginate();
 
-  const causes = await features.query.populate({
-    path: "cause_type",
-    select: "cause_type",
-  });
+  const causes = await features.query;
 
   return res.status(200).json({
     status: "success",
@@ -93,10 +84,7 @@ exports.getAllCauses = catchAsync(async (req, res, next) => {
 //GET api/v1/causes
 //Public
 exports.getCause = catchAsync(async (req, res, next) => {
-  const cause = await Cause.findById(req.params.id).populate({
-    path: "cause_type",
-    select: "cause_type",
-  });
+  const cause = await Cause.findById(req.params.id);
 
   if (!cause) {
     return next(new AppError("No cause found with that id", 404));

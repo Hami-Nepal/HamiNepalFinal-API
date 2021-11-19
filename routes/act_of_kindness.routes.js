@@ -4,6 +4,7 @@ const authController = require("../controllers/authController");
 
 const router = express.Router();
 
+router.route("/featured").get(kindnessController.getFeatured);
 router
   .route("/")
   .get(kindnessController.getAllKindness)

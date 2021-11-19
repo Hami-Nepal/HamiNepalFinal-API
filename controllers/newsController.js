@@ -74,6 +74,7 @@ exports.getSingleNews = catchAsync(async(req, res, next) =>{
     if(!news){
         return next(new AppError("No news found with that id", 400))
     }
+    res.status(200).json({ status: "success", data: news });
 })
 
 //@desc delete news

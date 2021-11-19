@@ -58,18 +58,18 @@ exports.createKindness = catchAsync(async (req, res, next) => {
 //GET api/v1/kindness
 //Public
 
-exports.getAllKindness= catchAsync(async (req, res, next) => {
-    const kindness = await ActOfKindness.find().populate({
-      path: "volunteer",
-      select: "first_name last_name field_of_expertise",
-    });
-  
-    return res.status(200).json({
-      status: "success",
-      results: kindness.length,
-      data: { kindness },
-    });
+exports.getAllKindness = catchAsync(async (req, res, next) => {
+  const kindness = await ActOfKindness.find().populate({
+    path: "volunteer",
+    select: "first_name last_name field_of_expertise",
   });
+
+  return res.status(200).json({
+    status: "success",
+    results: kindness.length,
+    data: { kindness },
+  });
+});
 
 //@desc Get single kindness
 //GET api/v1/events/:id
@@ -92,3 +92,11 @@ exports.updateKindness = factory.updateOne(ActOfKindness);
 //PATCH api/v1/events/:id
 //Private
 exports.deleteKindness = factory.deleteOne(ActOfKindness);
+
+exports.getFeatured = async (req, res, next) => {
+  const featured = await ActOfKindness.find({ featured: true }).sort(
+    "featured_ranking"
+  );
+
+  res.status(200).json({ status: "ok", featured });
+};

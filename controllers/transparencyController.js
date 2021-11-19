@@ -32,7 +32,6 @@ exports.resizeTransparencyPhoto = catchAsync(async (req, res, next) => {
   req.file.filename = `transparency-${Date.now()}.jpeg`;
 
   await sharp(req.file.buffer)
-
     .toFormat("jpeg")
     .jpeg({ quality: 90 })
     .toFile(`public/img/transparency/${req.file.filename}`);
@@ -62,16 +61,7 @@ exports.getAllTransparency = catchAsync(async (req, res, next) => {
     .limitFields()
     .paginate();
 
-  const transparencies = await features.query.populate([
-    {
-      path: "event",
-      select: "name type balance description status",
-    },
-    {
-      path: "cause",
-      select: "name status balance description",
-    },
-  ]);
+  const transparencies = await features.query;
 
   return res.status(200).json({
     status: "success",
