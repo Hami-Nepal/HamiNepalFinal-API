@@ -45,6 +45,6 @@ process.on("unhandledRejection", (err) => {
   });
 });
 
-if (process.env.NODE_ENV === "production") {
-  setInterval(() => axios.get("https://haminepal.herokuapp.com/"), 1740000);
-}
+// if (process.env.NODE_ENV === "production") {
+//   setInterval(() => axios.get("https://haminepal.herokuapp.com/"), 1740000);
+// }

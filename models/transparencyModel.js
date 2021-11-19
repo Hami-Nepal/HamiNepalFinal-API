@@ -26,13 +26,11 @@ const transparencySchema = new mongoose.Schema(
     },
     slug: { type: String },
     event: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Event",
+      type: String,
       required: false,
     },
     cause: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Cause",
+      type: String,
       required: false,
     },
   },

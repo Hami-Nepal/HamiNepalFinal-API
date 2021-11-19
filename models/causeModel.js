@@ -8,8 +8,7 @@ const causeSchema = new mongoose.Schema(
       required: [true, "A cause must have a name"],
     },
     cause_type: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Cause_type",
+      type: String,
       required: [true, "A cause must have a type"],
     },
     photos: {
@@ -33,14 +32,8 @@ const causeSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["normal", "important", "super"],
-      default: "normal",
-    },
-    approval: {
-      type: String,
-      enum: ["Approved", "Unapproved"],
-      default: "Unapproved",
-      required: true,
+      enum: ["ongoing", "past"],
+      default: "ongoing",
     },
     balance: {
       type: Number,
