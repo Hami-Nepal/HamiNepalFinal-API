@@ -5,6 +5,7 @@ const APIServices = require("./../utils/apiServices");
 const multer = require("multer");
 const sharp = require("sharp");
 const factory = require("./handlerFactory");
+const allqueryresults = require("../middleware/allqueryresults");
 
 //@desc Create new transparency
 //GET api/v1/transparency
@@ -52,22 +53,7 @@ exports.createTransparency = catchAsync(async (req, res, next) => {
 //GET api/v1/transparency
 //Public
 exports.getAllTransparency = catchAsync(async (req, res, next) => {
-  const { name } = req.query;
-  const regex = new RegExp(name, "i");
-
-  const features = new APIServices(Transparency.find(), req.query)
-    .filter({ name: regex })
-    .sort()
-    .limitFields()
-    .paginate();
-
-  const transparencies = await features.query;
-
-  return res.status(200).json({
-    status: "success",
-    results: transparencies.length,
-    data: { transparencies },
-  });
+  res.status(200).json(res.allqueryresults);
 });
 
 //@desc Get single transparency

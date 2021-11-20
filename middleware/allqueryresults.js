@@ -70,7 +70,7 @@ const allqueryresults = (model, populate) => async (req, res, next) => {
   res.allqueryresults = {
     success: true,
     count: results.length,
-    pagination,
+    total_data: total,
     data: results,
   };
   next();

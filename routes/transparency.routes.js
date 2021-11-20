@@ -1,12 +1,14 @@
 const express = require("express");
 const transparencyController = require("../controllers/transparencyController");
 const authController = require("../controllers/authController");
+const allqueryresults = require("../middleware/allqueryresults");
+const Transparency = require("../models/transparencyModel");
 
 const router = express.Router();
 
 router
   .route("/")
-  .get(transparencyController.getAllTransparency)
+  .get(allqueryresults(Transparency), transparencyController.getAllTransparency)
   .post(
     authController.protect,
     authController.restrictTo("admin"),

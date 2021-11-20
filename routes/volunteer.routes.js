@@ -1,12 +1,14 @@
 const express = require("express");
 const volunteerController = require("../controllers/volunteerController");
 const authController = require("./../controllers/authController");
+const Volunteer = require("../models/volunteerModel");
+const allqueryresults = require("../middleware/allqueryresults");
 
 const router = express.Router();
 
 router
   .route("/")
-  .get(volunteerController.getAllVolunteers)
+  .get(allqueryresults(Volunteer), volunteerController.getAllVolunteers)
   .post(
     volunteerController.uploadVolunteerPhoto,
     volunteerController.resizeVolunteerPhoto,

@@ -5,7 +5,7 @@ const APIServices = require("./../utils/apiServices");
 const multer = require("multer");
 const sharp = require("sharp");
 const factory = require("./handlerFactory");
-
+const allqueryresults = require("../middleware/allqueryresults");
 //@desc Create new Volunteer
 //GET api/v1/volunteer
 //Public
@@ -56,18 +56,7 @@ exports.createVolunteer = catchAsync(async (req, res, next) => {
 //GET api/v1/volunteer
 //Public
 exports.getAllVolunteers = catchAsync(async (req, res, next) => {
-  const features = new APIServices(Volunteer.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
-  const volunteers = await features.query;
-
-  return res.status(200).json({
-    status: "success",
-    results: volunteers.length,
-    data: { volunteers },
-  });
+  res.status(200).json(res.allqueryresults);
 });
 
 //@desc Create new Volunteer

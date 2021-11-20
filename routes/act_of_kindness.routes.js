@@ -1,13 +1,21 @@
 const express = require("express");
 const kindnessController = require("../controllers/kindessController");
 const authController = require("../controllers/authController");
+const allqueryresults = require("../middleware/allqueryresults");
+const ActOfKindness = require("../models/kindnessModel");
 
 const router = express.Router();
 
 router.route("/featured").get(kindnessController.getFeatured);
 router
   .route("/")
-  .get(kindnessController.getAllKindness)
+  .get(
+    allqueryresults(ActOfKindness, {
+      path: "volunteer",
+      select: "first_name last_name field_of_expertise",
+    }),
+    kindnessController.getAllKindness
+  )
   .post(
     authController.protect,
     authController.restrictTo("admin"),
