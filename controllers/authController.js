@@ -364,22 +364,23 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.loginAdmin = catchAsync(async (req, res, next) => {
-  const schema = Joi.object({
-    password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
-    email: Joi.string().email({
-      minDomainSegments: 2,
-      tlds: { allow: ["com", "net"] },
-    }),
-  });
+  // console.log(req);
+  // const schema = Joi.object({
+  //   password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
+  //   email: Joi.string().email({
+  //     minDomainSegments: 2,
+  //     tlds: { allow: ["com", "net"] },
+  //   }),
+  // });
 
-  const { error } = schema.validate({
-    email: req.body.email,
-    password: req.body.password,
-  });
+  // const { error } = schema.validate({
+  //   email: req.body.email,
+  //   password: req.body.password,
+  // });
 
-  if (error) {
-    return next(new AppError(`${error.details[0].message}`, 403));
-  }
+  // if (error) {
+  //   return next(new AppError(`${error.details[0].message}`, 403));
+  // }
 
   const { email, password } = req.body;
 
