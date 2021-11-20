@@ -5,6 +5,7 @@ const APIServices = require("./../utils/apiServices");
 const multer = require("multer");
 const sharp = require("sharp");
 const factory = require("./handlerFactory");
+const allqueryresults = require("../middleware/allqueryresults");
 
 //@desc Upload the picture of the cause
 //POST api/v1/causes/
@@ -62,22 +63,7 @@ exports.createCause = catchAsync(async (req, res, next) => {
 //GET api/v1/causes
 //Public
 exports.getAllCauses = catchAsync(async (req, res, next) => {
-  const { name } = req.query;
-  const regex = new RegExp(name, "i");
-
-  const features = new APIServices(Cause.find(), req.query)
-    .filter({ name: regex })
-    .sort()
-    .limitFields()
-    .paginate();
-
-  const causes = await features.query;
-
-  return res.status(200).json({
-    status: "success",
-    results: causes.length,
-    data: { causes },
-  });
+  res.status(200).json(res.allqueryresults);
 });
 
 //@desc Get single cause

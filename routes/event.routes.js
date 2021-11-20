@@ -1,12 +1,14 @@
 const express = require("express");
 const eventController = require("../controllers/eventController");
 const authController = require("../controllers/authController");
+const allqueryresults = require("../middleware/allqueryresults");
+const Event = require("../models/eventModel");
 
 const router = express.Router();
 
 router
   .route("/")
-  .get(eventController.getAllEvents)
+  .get(allqueryresults(Event), eventController.getAllEvents)
   .post(
     authController.protect,
     authController.restrictTo("admin"),

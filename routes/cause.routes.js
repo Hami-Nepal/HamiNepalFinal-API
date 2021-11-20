@@ -1,12 +1,14 @@
 const express = require("express");
 const causeController = require("../controllers/causeController");
 const authController = require("../controllers/authController");
+const allqueryresults = require("../middleware/allqueryresults");
+const Cause = require("../models/causeModel");
 
 const router = express.Router();
 
 router
   .route("/")
-  .get(causeController.getAllCauses)
+  .get(allqueryresults(Cause), causeController.getAllCauses)
   .post(
     authController.protect,
     authController.restrictToBoth("admin", "user"),
