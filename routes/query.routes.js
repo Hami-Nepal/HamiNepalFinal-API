@@ -48,38 +48,14 @@ router
     queryController.allEventDonationAmount
   );
 
-router
-  .route("/totalDonations")
-  .get(
-    authController.protect,
-    authController.restrictTo("admin"),
-    queryController.totalDonation
-  );
-router
-  .route("/totalExpenses")
-  .get(
-    authController.protect,
-    authController.restrictTo("admin"),
-    queryController.totalExpenses
-  );
+router.route("/totalDonations").get(queryController.totalDonation);
+router.route("/totalExpenses").get(queryController.totalExpenses);
 
 router.route("/average/rating").get(queryController.getAverageRating);
 
-router
-  .route("/volunteers/state")
-  .get(
-    authController.protect,
-    authController.restrictTo("admin"),
-    queryController.stateVolunteer
-  );
+router.route("/volunteers/state").get(queryController.stateVolunteer);
 
-router
-  .route("/volunteers/city")
-  .get(
-    authController.protect,
-    authController.restrictTo("admin"),
-    queryController.cityVolunteer
-  );
+router.route("/volunteers/city").get(queryController.cityVolunteer);
 
 router
   .route("/eventlocation/volunteers/:id")
