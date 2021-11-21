@@ -10,15 +10,24 @@ const boardMemberSchema = new mongoose.Schema(
       type: String,
       required: [true, "A board member must have a designation"],
     },
-    slug: { type: String },
+
     message: {
       type: String,
       required: [true, "A board member must provide a message"],
     },
-    socialMediaLinks: {
-      type: [String],
-      required: [true, "A board member must provide their social media links"],
+    facebookLink: {
+      type: String,
     },
+    instaLink: {
+      type: String,
+    },
+    twitterLink: {
+      type: String,
+    },
+    linkedLink: {
+      type: String,
+    },
+
     photo: {
       type: String,
       required: [true, "A board member must have a picture"],
@@ -26,11 +35,6 @@ const boardMemberSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-boardMemberSchema.pre("save", function (next) {
-  this.slug = slugify(this.name, { lower: true });
-  next();
-});
 
 const BoardMember = mongoose.model("BoardMember", boardMemberSchema);
 

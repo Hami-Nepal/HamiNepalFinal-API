@@ -35,7 +35,6 @@ exports.resizeBoardMemberPhoto = catchAsync(async (req, res, next) => {
     .toFormat("jpeg")
     .jpeg({ quality: 90 })
     .toFile(`public/img/boardmember/${req.file.filename}`);
-
   req.body.photo = `${req.protocol}://${req.get("host")}/img/boardmember/${
     req.file.filename
   }`;
