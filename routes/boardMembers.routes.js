@@ -19,11 +19,7 @@ router
 
 router
   .route("/:id")
-  .get(
-    authController.protect,
-
-    boardMembersController.getSingleBoardMember
-  )
+  .get(boardMembersController.getSingleBoardMember)
   .put(
     authController.protect,
     authController.restrictTo("admin"),
