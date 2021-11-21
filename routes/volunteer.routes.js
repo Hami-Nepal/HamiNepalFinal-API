@@ -24,8 +24,6 @@ router
     volunteerController.deleteVolunteer
   )
   .put(
-    authController.protect,
-    authController.restrictTo("admin"),
     volunteerController.uploadVolunteerPhoto,
     volunteerController.resizeVolunteerPhoto,
     volunteerController.updateVolunteer
