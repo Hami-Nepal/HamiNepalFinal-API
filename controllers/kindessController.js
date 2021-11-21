@@ -5,6 +5,7 @@ const APIServices = require("./../utils/apiServices");
 const multer = require("multer");
 const sharp = require("sharp");
 const factory = require("./handlerFactory");
+const allqueryresults = require("../middleware/allqueryresults");
 
 //@desc Create new kindness
 //POST api/v1/kindness
@@ -59,16 +60,7 @@ exports.createKindness = catchAsync(async (req, res, next) => {
 //Public
 
 exports.getAllKindness = catchAsync(async (req, res, next) => {
-  const kindness = await ActOfKindness.find().populate({
-    path: "volunteer",
-    select: "first_name last_name field_of_expertise",
-  });
-
-  return res.status(200).json({
-    status: "success",
-    results: kindness.length,
-    data: { kindness },
-  });
+  res.status(200).json(res.allqueryresults);
 });
 
 //@desc Get single kindness

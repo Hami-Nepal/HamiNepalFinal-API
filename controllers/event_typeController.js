@@ -3,6 +3,7 @@ const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
 const APIServices = require("../utils/apiServices");
+const allqueryresults = require("../middleware/allqueryresults");
 
 exports.createEvent_type = catchAsync(async (req, res, next) => {
   newEvent_type = await Event_type.create(req.body);
@@ -10,19 +11,7 @@ exports.createEvent_type = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllEvent_type = catchAsync(async (req, res, next) => {
-  const event_type = new APIServices(Event_type.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
-
-  const Event_type_var = await event_type.query;
-
-  return res.status(200).json({
-    status: "success",
-    results: Event_type_var.length,
-    data: { Event_type_var },
-  });
+  res.status(200).json(res.allqueryresults);
 });
 
 exports.getSingleEvent_type = catchAsync(async (req, res, next) => {

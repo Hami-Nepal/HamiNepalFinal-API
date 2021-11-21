@@ -5,6 +5,7 @@ const APIServices = require("./../utils/apiServices");
 const multer = require("multer");
 const sharp = require("sharp");
 const factory = require("./handlerFactory");
+const allqueryresults = require("../middleware/allqueryresults");
 
 //@desc Create new event
 //POST api/v1/events
@@ -59,21 +60,7 @@ exports.createEvent = catchAsync(async (req, res, next) => {
 //GET api/v1/events
 //Public
 exports.getAllEvents = catchAsync(async (req, res, next) => {
-  const { name } = req.query;
-  const regex = new RegExp(name, "i");
-
-  const features = new APIServices(Event.find(), req.query)
-    .filter({ name: regex })
-    .sort()
-    .limitFields()
-    .paginate();
-  const events = await features.query;
-
-  return res.status(200).json({
-    status: "success",
-    results: events.length,
-    data: events,
-  });
+  res.status(200).json(res.allqueryresults);
 });
 
 //@desc Get single events
