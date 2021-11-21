@@ -6,13 +6,6 @@ const multer = require("multer");
 const sharp = require("sharp");
 const BoardMember = require("../models/boardMemberModel");
 
-//@desc Get all board members
-//GET api/v1/boardmembers
-//Public
-exports.getAllBoardMembers = catchAsync(async (req, res, next) => {
-  res.status(200).json(res.allqueryresults);
-});
-
 //@desc Upload the picture of the cause
 //POST api/v1/causes/
 //Private
@@ -56,6 +49,13 @@ exports.resizeBoardMemberPhoto = catchAsync(async (req, res, next) => {
 exports.createBoardMembers = catchAsync(async (req, res, next) => {
   members = await BoardMember.create(req.body);
   res.status(201).json({ status: "success", data: { members } });
+});
+
+//@desc Get all board members
+//GET api/v1/boardmembers
+//Public
+exports.getAllBoardMembers = catchAsync(async (req, res, next) => {
+  res.status(200).json(res.allqueryresults);
 });
 
 //@desc Get single board member
