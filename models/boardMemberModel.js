@@ -15,19 +15,21 @@ const boardMemberSchema = new mongoose.Schema(
       type: String,
       required: [true, "A board member must provide a message"],
     },
-    facebookLink: {
-      type: String,
+    // facebookLink: {
+    //   type: String,
+    // },
+    // instaLink: {
+    //   type: String,
+    // },
+    // twitterLink: {
+    //   type: String,
+    // },
+    // linkedLink: {
+    //   type: String,
+    // },
+    socialMediaLinks: {
+      type: {},
     },
-    instaLink: {
-      type: String,
-    },
-    twitterLink: {
-      type: String,
-    },
-    linkedLink: {
-      type: String,
-    },
-
     photo: {
       type: String,
       required: [true, "A board member must have a picture"],
