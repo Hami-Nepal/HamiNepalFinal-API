@@ -1,6 +1,6 @@
 #!/bin/sh  
 rm -rf node_modules   
 sudo git pull origin main
-npm install
+sudo npm install --unsafe-perm
 sudo systemctl restart nginx
 pm2 restart server
