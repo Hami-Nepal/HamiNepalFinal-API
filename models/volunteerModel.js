@@ -83,11 +83,11 @@ const volunteerSchema = new mongoose.Schema(
       type: String,
     },
     event_involvement: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "Event",
     },
     cause_involvement: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "Cause",
     },
   },
