@@ -8,6 +8,9 @@ const homepageSchema = new mongoose.Schema(
     content: {
       type: String,
     },
+    color: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
