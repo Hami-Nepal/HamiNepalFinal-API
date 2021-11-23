@@ -5,7 +5,6 @@ const APIServices = require("./../utils/apiServices");
 const multer = require("multer");
 const sharp = require("sharp");
 const factory = require("./handlerFactory");
-const allqueryresults = require("../middleware/allqueryresults");
 
 //@desc Create new transparency
 //GET api/v1/transparency

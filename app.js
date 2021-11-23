@@ -58,6 +58,7 @@ const districtWiseOurwork = require("./routes/districtwisework.routes");
 const ActOfKindness = require("./routes/act_of_kindness.routes");
 const News = require("./routes/news.routes");
 const Event_type = require("./routes/event_type.routes");
+const BoardMember = require("./routes/boardMembers.routes");
 
 app.use("/", homeRouter);
 app.use("/api/v1/users", userRouter);
@@ -81,6 +82,7 @@ app.use("/api/v1/districtworks", districtWiseOurwork);
 app.use("/api/v1/kindness", ActOfKindness);
 app.use("/api/v1/news", News);
 app.use("/api/v1/event_type", Event_type);
+app.use("/api/v1/boardmembers", BoardMember);
 
 app.all("*", (req, res, next) => {
   return next(new AppError(`Cant find ${req.originalUrl} on this server.`));

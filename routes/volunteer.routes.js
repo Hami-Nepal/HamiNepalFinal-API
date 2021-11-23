@@ -14,6 +14,13 @@ router
     volunteerController.resizeVolunteerPhoto,
     volunteerController.createVolunteer
   );
+router
+  .route("/verify/:id")
+  .put(
+    authController.protect,
+    authController.restrictTo("admin"),
+    volunteerController.verifyVolunteer
+  );
 
 router
   .route("/:id")
@@ -24,8 +31,6 @@ router
     volunteerController.deleteVolunteer
   )
   .put(
-    authController.protect,
-    authController.restrictTo("admin"),
     volunteerController.uploadVolunteerPhoto,
     volunteerController.resizeVolunteerPhoto,
     volunteerController.updateVolunteer
