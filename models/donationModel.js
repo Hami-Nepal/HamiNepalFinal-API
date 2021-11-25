@@ -2,12 +2,13 @@ const mongoose = require("mongoose");
 
 const donationSchema = new mongoose.Schema(
   {
-    type: {
-      type: String,
-      required: [true, "Please enter a type"],
-    },
+    // type: {
+    //   type: String,
+    //   required: [true, "Please enter a type"],
+    // },
     slug: {
       type: String,
+      unique: true,
       required: [true, "Please enter a slug"],
     },
     is_anonymous: {
@@ -38,10 +39,10 @@ const donationSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Event",
     },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
+    // user: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "User",
+    // },
     street_address: {
       type: String,
     },
@@ -52,7 +53,7 @@ const donationSchema = new mongoose.Schema(
       type: String,
     },
     zip_code: {
-      type: String,
+      type: Number,
     },
     country: {
       type: String,
