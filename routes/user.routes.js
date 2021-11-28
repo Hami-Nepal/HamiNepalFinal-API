@@ -35,6 +35,7 @@ router.get(
 router.put(
   "/updateMe",
   authController.protect,
+  authController.restrictTo("user"),
   userController.uploadUserPhoto,
   userController.resizeUserPhoto,
   userController.updateMe
