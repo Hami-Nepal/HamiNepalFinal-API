@@ -51,6 +51,7 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+
   phone: {
     type: Number,
     // required: [true, 'Please enter your number'],

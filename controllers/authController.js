@@ -9,6 +9,8 @@ const Joi = require("joi");
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
 const sendEmail = require("../utils/email");
+const multer = require("multer");
+const sharp = require("sharp");
 
 const signToken = (id, role) => {
   return jwt.sign({ id, role }, process.env.JWT_SECRET, {
@@ -27,6 +29,42 @@ const createSendToken = (user, statusCode, req, res) => {
     // data: user,AS
   });
 };
+//@desc Create new event
+//POST api/v1/events
+//Private
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image")) {
+    cb(null, true);
+  } else {
+    cb(new AppError("Not an image! Please upload only images.", 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+exports.uploadUserPhoto = upload.single("photo");
+
+exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
+  if (!req.file) return next();
+
+  req.file.filename = `user-${Date.now()}.jpeg`;
+
+  await sharp(req.file.buffer)
+    .toFormat("jpeg")
+    .jpeg({ quality: 90 })
+    .toFile(`public/img/user/${req.file.filename}`);
+
+  req.body.photo = `${req.protocol}://${req.get("host")}/img/user/${
+    req.file.filename
+  }`;
+
+  next();
+});
 
 exports.signup = catchAsync(async (req, res, next) => {
   User.findOne({ email: req.body.email }, function (err, user) {
@@ -50,7 +88,9 @@ exports.signup = catchAsync(async (req, res, next) => {
         lastname: req.body.lastname,
         email: req.body.email,
         password: req.body.password,
+        photo: req.body.photo,
       });
+
       user.save(function (err) {
         if (err) {
           console.log(err);
