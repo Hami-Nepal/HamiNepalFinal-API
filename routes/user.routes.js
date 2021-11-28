@@ -36,6 +36,7 @@ router.put(
   "/updateMe",
   authController.protect,
   userController.uploadUserPhoto,
+  userController.resizeUserPhoto,
   userController.updateMe
 );
 router.delete("/deleteMe", authController.protect, userController.deleteMe);
