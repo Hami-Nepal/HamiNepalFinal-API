@@ -15,7 +15,6 @@ exports.index = catchAsync(async (req, res, next) => {
     .paginate();
 
   const donations = await features.query.populate([
-    { path: "user", select: "firstname lastname" },
     {
       path: "event",
       select: "name type balance status",
@@ -92,7 +91,6 @@ exports.store = catchAsync(async (req, res, next) => {
 //POST api/v1/userdonations
 //Private
 exports.createDonation = catchAsync(async (req, res, next) => {
-  req.body.user = req.user.id;
   let isVerified = false;
   if (req.body.payment_type === "KHALTI") {
     isVerified = false;
@@ -149,7 +147,6 @@ exports.createDonation = catchAsync(async (req, res, next) => {
 //Public
 exports.getDonation = catchAsync(async (req, res, next) => {
   const donation = await Donation.findById(req.params.id).populate([
-    { path: "user", select: "firstname lastname" },
     {
       path: "event",
       select: "name type balance status",

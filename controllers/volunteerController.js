@@ -52,6 +52,24 @@ exports.createVolunteer = catchAsync(async (req, res, next) => {
   res.status(201).json({ status: "success", data: volunteer });
 });
 
+exports.verifyVolunteer = catchAsync(async (req, res, next) => {
+  let volunteer = await Volunteer.findById(req.params.id);
+  if (volunteer.isVerified == false) {
+    req.body.isVerified = true;
+  } else {
+    req.body.isVerified = false;
+  }
+  updateVolunteer = await Volunteer.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!updateVolunteer) {
+    return next(new AppError("No volunteer found with that ID", 404));
+  }
+  res.status(201).json({ status: "success", data: updateVolunteer });
+});
+
 //@desc Create new Volunteer
 //GET api/v1/volunteer
 //Public

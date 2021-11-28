@@ -12,7 +12,8 @@ router
   .post(
     authController.protect,
     authController.restrictTo("admin"),
-
+    boardMembersController.uploadBoardMemberPhoto,
+    boardMembersController.resizeBoardMemberPhoto,
     boardMembersController.createBoardMembers
   );
 

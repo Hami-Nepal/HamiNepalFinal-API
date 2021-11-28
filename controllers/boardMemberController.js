@@ -5,6 +5,8 @@ const factory = require("./handlerFactory");
 const multer = require("multer");
 const sharp = require("sharp");
 const BoardMember = require("../models/boardMemberModel");
+const path = require("path");
+const fs = require("fs");
 
 //@desc Upload the picture of the cause
 //POST api/v1/causes/
@@ -30,6 +32,11 @@ exports.resizeBoardMemberPhoto = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
 
   req.file.filename = `boardmember-${Date.now()}.jpeg`;
+
+  var dir = "public/img/boardmember";
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, 0744);
+  }
 
   await sharp(req.file.buffer)
     .toFormat("jpeg")

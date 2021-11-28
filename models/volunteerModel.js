@@ -80,11 +80,19 @@ const volunteerSchema = new mongoose.Schema(
       required: [true, "A volunteer must have a street address"],
     },
     project_worked: {
-      type: String
+      type: String,
     },
-    event: {
-      type: mongoose.Schema.Types.ObjectId,
+    event_involvement: {
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "Event",
+    },
+    cause_involvement: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Cause",
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }
