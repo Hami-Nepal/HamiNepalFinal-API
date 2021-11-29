@@ -1,6 +1,8 @@
 const express = require("express");
 const userController = require("./../controllers/userController");
 const authController = require("./../controllers/authController");
+const allqueryresults = require("../middleware/allqueryresults");
+const User = require("../models/userModel");
 
 const router = express.Router();
 
@@ -45,6 +47,7 @@ router.delete("/deleteMe", authController.protect, userController.deleteMe);
 router
   .route("/")
   .get(
+    allqueryresults(User),
     authController.protect,
     authController.restrictTo("admin"),
     userController.getAllUsers

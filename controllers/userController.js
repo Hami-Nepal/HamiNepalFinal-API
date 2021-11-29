@@ -106,7 +106,9 @@ exports.createUser = (req, res) => {
 };
 
 exports.getUser = factory.getOne(User);
-exports.getAllUsers = factory.getAll(User);
+exports.getAllUsers = catchAsync(async (req, res, next) => {
+  res.status(200).json(res.allqueryresults);
+});
 
 // Do NOT update passwords with this!
 exports.updateUser = factory.updateOne(User);

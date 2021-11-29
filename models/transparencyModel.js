@@ -29,7 +29,15 @@ const transparencySchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    event_name: {
+      type: String,
+      required: false,
+    },
     cause: {
+      type: String,
+      required: false,
+    },
+    cause_name: {
       type: String,
       required: false,
     },
