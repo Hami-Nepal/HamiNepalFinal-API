@@ -31,9 +31,12 @@ router
     volunteerController.deleteVolunteer
   )
   .put(
+    authController.protect,
     volunteerController.uploadVolunteerPhoto,
     volunteerController.resizeVolunteerPhoto,
     volunteerController.updateVolunteer
   );
+
+router.route("/volunteerlogin").post(volunteerController.VolunteerLogin);
 
 module.exports = router;
