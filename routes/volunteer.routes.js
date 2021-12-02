@@ -31,7 +31,7 @@ router
     volunteerController.deleteVolunteer
   )
   .put(
-    authController.protect,
+    volunteerController.protect,
     volunteerController.uploadVolunteerPhoto,
     volunteerController.resizeVolunteerPhoto,
     volunteerController.updateVolunteer
