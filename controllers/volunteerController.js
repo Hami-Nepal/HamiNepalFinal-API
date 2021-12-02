@@ -71,7 +71,7 @@ exports.createVolunteer = catchAsync(async (req, res, next) => {
   const volunteerExists = await Volunteer.findOne({ email });
   // error occur
   if (volunteerExists) {
-    return res.json({
+    return res.status(400).json({
       Status: false,
       reason: `${volunteerExists.email} is already registered`,
     });
