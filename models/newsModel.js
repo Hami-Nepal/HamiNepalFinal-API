@@ -1,23 +1,30 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const newsSchema = new mongoose.Schema({
-    title:{
-        type:String,
-        required:[true, "News Section should have title"]
+const newsSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: [true, "News Section should have title"],
     },
-    summary:{
-        type:String,
-        required:[true,"News Section should have summary of the news"]
+    newsType: {
+      type: String,
+      enum: ["national", "international"],
+      required: [true, "News type is required"],
     },
-    link:{
-        type:String,
-        required:[true, "please provide the news link"]
+    summary: {
+      type: String,
+      required: [true, "News Section should have summary of the news"],
     },
-    photo:{
-        type:String
-    }
-}, { timestamps: true }
-)
+    link: {
+      type: String,
+      required: [true, "please provide the news link"],
+    },
+    photo: {
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
 
-const News = mongoose.model("News", newsSchema)
+const News = mongoose.model("News", newsSchema);
 module.exports = News;
