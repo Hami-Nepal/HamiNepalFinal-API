@@ -12,6 +12,10 @@ const eventSchema = new mongoose.Schema(
       enum: ["ongoing", "past"],
       default: "ongoing",
     },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
     type: {
       type: String,
       required: [true, "Eevnt type is required"],
