@@ -21,11 +21,11 @@ const eventSchema = new mongoose.Schema(
     },
     challenges: {
       type: String,
-      required: [true, "An event must have challanges"],
+      // required: [true, "An event must have challanges"],
     },
     difficulties: {
       type: String,
-      required: [true, "An event must have difficulties"],
+      // required: [true, "An event must have difficulties"],
     },
     photos: {
       type: [String],
@@ -36,7 +36,7 @@ const eventSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: [true, "An event must have a description"],
+      // required: [true, "An event must have a description"],
     },
     country: {
       type: String,
@@ -57,11 +57,11 @@ const eventSchema = new mongoose.Schema(
     },
     city: {
       type: String,
-      required: [true, "A volunteer must have a city"],
+      // required: [true, "A volunteer must have a city"],
     },
     street_address: {
       type: String,
-      required: [true, "A volunteer must have a street address"],
+      // required: [true, "A volunteer must have a street address"],
     },
 
     slug: { type: String },

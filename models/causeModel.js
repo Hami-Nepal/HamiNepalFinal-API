@@ -20,15 +20,15 @@ const causeSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: [true, "A cause must have a description"],
+      // required: [true, "A cause must have a description"],
     },
     challenges: {
       type: String,
-      required: [true, "A cause must have challanges"],
+      // required: [true, "A cause must have challanges"],
     },
     difficulties: {
       type: String,
-      required: [true, "A cause must have difficulties"],
+      // required: [true, "A cause must have difficulties"],
     },
     status: {
       type: String,
@@ -37,7 +37,7 @@ const causeSchema = new mongoose.Schema(
     },
     balance: {
       type: Number,
-      required: [true, "Please enter the balance"],
+      // required: [true, "Please enter the balance"],
     },
     slug: { type: String },
   },
