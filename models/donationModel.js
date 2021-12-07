@@ -8,7 +8,6 @@ const donationSchema = new mongoose.Schema(
     // },
     slug: {
       type: String,
-      unique: true,
       required: [true, "Please enter a slug"],
     },
     is_anonymous: {
