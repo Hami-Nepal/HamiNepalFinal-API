@@ -75,6 +75,24 @@ exports.getEvent = catchAsync(async (req, res, next) => {
   res.status(200).json({ status: "success", data: event });
 });
 
+exports.verifyEvent = catchAsync(async (req, res, next) => {
+  let event = await Event.findById(req.params.id);
+  if (event.isVerified == false) {
+    req.body.isVerified = true;
+  } else {
+    req.body.isVerified = false;
+  }
+  updateEvent = await Event.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!updateEvent) {
+    return next(new AppError("No Event found with that ID", 404));
+  }
+  res.status(201).json({ status: "success", data: updateEvent });
+});
+
 //@desc Update the event
 //PATCH api/v1/events/:id
 //Private
