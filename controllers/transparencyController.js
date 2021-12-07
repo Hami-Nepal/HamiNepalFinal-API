@@ -24,21 +24,28 @@ const upload = multer({
   fileFilter: multerFilter,
 });
 
-exports.uploadTransparencyPhoto = upload.single("photo");
+exports.uploadTransparencyPhoto = upload.array("photos", []);
 
 exports.resizeTransparencyPhoto = catchAsync(async (req, res, next) => {
-  if (!req.file) return next();
+  if (!req.files) return next();
 
-  req.file.filename = `transparency-${Date.now()}.jpeg`;
+  req.body.photos = [];
+  await Promise.all(
+    req.files.map(async (file) => {
+      const filename = file.originalname.replace(/\..+$/, "");
+      const newFilename = `transparency-${filename}-${Date.now()}.jpeg`;
 
-  await sharp(req.file.buffer)
-    .toFormat("jpeg")
-    .jpeg({ quality: 90 })
-    .toFile(`public/img/transparency/${req.file.filename}`);
+      await sharp(file.buffer)
+        .resize(500, 500)
+        .toFormat("jpeg")
+        .jpeg({ quality: 90 })
+        .toFile(`public/img/transparency/${newFilename}`);
 
-  req.body.photo = `${req.protocol}://${req.get("host")}/img/transparency/${
-    req.file.filename
-  }`;
+      req.body.photos.push(
+        `${req.protocol}://${req.get("host")}/img/transparency/${newFilename}`
+      );
+    })
+  );
 
   next();
 });

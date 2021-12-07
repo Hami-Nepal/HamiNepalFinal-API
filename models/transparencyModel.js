@@ -12,8 +12,8 @@ const transparencySchema = new mongoose.Schema(
       enum: ["cause", "event"],
       required: [true, "A transparency must have a type"],
     },
-    photo: {
-      type: String,
+    photos: {
+      type: [String],
       required: [true, "photo is required"],
     },
     amount: {
