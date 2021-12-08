@@ -67,6 +67,18 @@ const eventSchema = new mongoose.Schema(
       type: String,
       // required: [true, "A volunteer must have a street address"],
     },
+    volunteers: [
+      {
+        volunteerId: {
+          type: String,
+          unique: [true, "volunteer id should be unique in each events"],
+        },
+        participated: {
+          type: Boolean,
+          default: false,
+        },
+      },
+    ],
 
     slug: { type: String },
   },

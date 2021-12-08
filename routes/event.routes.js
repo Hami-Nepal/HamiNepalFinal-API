@@ -41,4 +41,8 @@ router
     eventController.verifyEvent
   );
 
+router
+  .route("/volunteers/:eventId")
+  .post(authController.protect, eventController.volunteerParticipate);
+
 module.exports = router;

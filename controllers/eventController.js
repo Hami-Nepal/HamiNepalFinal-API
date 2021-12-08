@@ -102,3 +102,27 @@ exports.updateEvent = factory.updateOne(Event);
 //PATCH api/v1/events/:id
 //Private
 exports.deleteEvent = factory.deleteOne(Event);
+
+exports.volunteerParticipate = catchAsync(async (req, res, next) => {
+  const checkEvent = await Event.findById(req.params.eventId);
+
+  const volunteerExists = checkEvent.volunteers.find(
+    (volunteer) => volunteer.volunteerId === req.body.volunteerId
+  );
+
+  if (volunteerExists)
+    return res.status(400).json({
+      status: "failed",
+      message: "volunteer id exists in this event.",
+    });
+
+  const event = await Event.findByIdAndUpdate(
+    req.params.eventId,
+    {
+      $push: { volunteers: req.body },
+    },
+    { new: true }
+  );
+
+  res.status(200).json({ status: "ok", event });
+});
