@@ -11,7 +11,7 @@ router
   .get(allqueryresults(Event), eventController.getAllEvents)
   .post(
     authController.protect,
-    authController.restrictTo("admin"),
+    // authController.restrictTo("admin"),
     eventController.uploadEventPhoto,
     eventController.resizeEventPhoto,
     eventController.createEvent
