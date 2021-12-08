@@ -33,4 +33,12 @@ router
     eventController.deleteEvent
   );
 
+router
+  .route("/verify/:id")
+  .put(
+    authController.protect,
+    authController.restrictTo("admin"),
+    eventController.verifyEvent
+  );
+
 module.exports = router;
