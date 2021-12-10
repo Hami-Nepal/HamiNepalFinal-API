@@ -6,6 +6,7 @@ const multer = require("multer");
 const sharp = require("sharp");
 const factory = require("./handlerFactory");
 const allqueryresults = require("../middleware/allqueryresults");
+const Volunteer = require("../models/volunteerModel");
 
 //@desc Create new event
 //POST api/v1/events
@@ -133,6 +134,12 @@ exports.updateVolunteerParticipation = catchAsync(async (req, res, next) => {
     { $set: { "volunteers.$.participated": req.body.participated } },
     { new: true }
   );
+
+  const switchMethod = req.body.participated ? "$push" : "$pull";
+
+  const volunteer = await Volunteer.findByIdAndUpdate(req.params.volunteerId, {
+    [switchMethod]: { event_involvement: event._id },
+  });
 
   res.status(200).json({ status: "ok", event });
 });
