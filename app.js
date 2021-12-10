@@ -61,6 +61,7 @@ const Event_type = require("./routes/event_type.routes");
 const BoardMember = require("./routes/boardMembers.routes");
 const CivilRights = require("./routes/civilRights.routes");
 const kindDonation = require("./routes/kindDonation.routes");
+const kindTransparency = require("./routes/kindTransparency.routes");
 
 app.use("/", homeRouter);
 app.use("/api/v1/users", userRouter);
@@ -87,6 +88,7 @@ app.use("/api/v1/event_type", Event_type);
 app.use("/api/v1/boardmembers", BoardMember);
 app.use("/api/v1/civilrights", CivilRights);
 app.use("/api/v1/kinddonation", kindDonation);
+app.use("/api/v1/kindtransparency", kindTransparency);
 
 app.all("*", (req, res, next) => {
   return next(new AppError(`Cant find ${req.originalUrl} on this server.`));
