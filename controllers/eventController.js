@@ -126,3 +126,25 @@ exports.volunteerParticipate = catchAsync(async (req, res, next) => {
 
   res.status(200).json({ status: "ok", event });
 });
+
+exports.updateVolunteerParticipation = catchAsync(async (req, res, next) => {
+  const event = await Event.findOneAndUpdate(
+    { "volunteers.volunteerId": req.params.volunteerId },
+    { $set: { "volunteers.$.participated": req.body.participated } },
+    { new: true }
+  );
+
+  res.status(200).json({ status: "ok", event });
+});
+
+exports.deleteVolunteer = catchAsync(async (req, res, next) => {
+  const event = await Event.findByIdAndUpdate(
+    req.params.eventId,
+    {
+      $pull: { volunteers: { volunteerId: req.params.volunteerId } },
+    },
+    { new: true }
+  );
+
+  res.status(200).json({ status: "ok", event });
+});

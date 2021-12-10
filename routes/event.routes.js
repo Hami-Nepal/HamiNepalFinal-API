@@ -45,4 +45,20 @@ router
   .route("/volunteers/:eventId")
   .post(authController.protect, eventController.volunteerParticipate);
 
+router
+  .route("/volunteers/update/:volunteerId")
+  .patch(
+    authController.protect,
+    authController.restrictTo("admin"),
+    eventController.updateVolunteerParticipation
+  );
+
+router
+  .route("/volunteers/:eventId/delete/:volunteerId")
+  .patch(
+    authController.protect,
+    authController.restrictTo("admin"),
+    eventController.deleteVolunteer
+  );
+
 module.exports = router;
