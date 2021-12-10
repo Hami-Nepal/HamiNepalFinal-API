@@ -8,28 +8,7 @@ const axios = require("axios");
 //GET api/v1/donations
 //Public
 exports.index = catchAsync(async (req, res, next) => {
-  const features = new APIServices(Donation.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
-
-  const donations = await features.query.populate([
-    {
-      path: "event",
-      select: "name type balance status",
-    },
-    {
-      path: "cause",
-      select: "name status balance",
-    },
-  ]);
-
-  return res.status(200).json({
-    status: "success",
-    results: donations.length,
-    data: [...donations],
-  });
+  res.status(200).json(res.allqueryresults);
 });
 
 //@desc Create new donation
