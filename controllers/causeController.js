@@ -118,3 +118,27 @@ exports.causeApproval = catchAsync(async (req, res, next) => {
     data: { cause },
   });
 });
+
+exports.volunteerParticipate = catchAsync(async (req, res, next) => {
+  const checkCause = await Cause.findById(req.params.causeId);
+
+  const volunteerExists = checkCause.volunteers.find(
+    (volunteer) => volunteer.volunteerId === req.body.volunteerId
+  );
+
+  if (volunteerExists)
+    return res.status(400).json({
+      status: "failed",
+      message: "volunteer id exists in this cause.",
+    });
+
+  const cause = await Cause.findByIdAndUpdate(
+    req.params.causeId,
+    {
+      $push: { volunteers: req.body },
+    },
+    { new: true }
+  );
+
+  res.status(200).json({ status: "ok", cause });
+});

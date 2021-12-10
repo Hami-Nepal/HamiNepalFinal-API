@@ -41,4 +41,8 @@ router
     causeController.causeApproval
   );
 
+router
+  .route("/volunteers/:causeId")
+  .post(authController.protect, causeController.volunteerParticipate);
+
 module.exports = router;

@@ -39,6 +39,18 @@ const causeSchema = new mongoose.Schema(
       type: Number,
       // required: [true, "Please enter the balance"],
     },
+    volunteers: [
+      {
+        volunteerId: {
+          type: String,
+          unique: [true, "volunteer id should be unique in each events"],
+        },
+        participated: {
+          type: Boolean,
+          default: false,
+        },
+      },
+    ],
     slug: { type: String },
   },
 
