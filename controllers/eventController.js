@@ -129,7 +129,7 @@ exports.volunteerParticipate = catchAsync(async (req, res, next) => {
 
 exports.updateVolunteerParticipation = catchAsync(async (req, res, next) => {
   const event = await Event.findOneAndUpdate(
-    { "volunteers.volunteerId": req.params.volunteerId },
+    { "volunteers._id": req.params.docId },
     { $set: { "volunteers.$.participated": req.body.participated } },
     { new: true }
   );

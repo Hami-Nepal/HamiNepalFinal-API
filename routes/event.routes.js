@@ -46,7 +46,7 @@ router
   .post(authController.protect, eventController.volunteerParticipate);
 
 router
-  .route("/volunteers/update/:volunteerId")
+  .route("/volunteers/:docId/update/:volunteerId")
   .patch(
     authController.protect,
     authController.restrictTo("admin"),

@@ -142,3 +142,27 @@ exports.volunteerParticipate = catchAsync(async (req, res, next) => {
 
   res.status(200).json({ status: "ok", cause });
 });
+
+exports.updateVolunteerParticipation = catchAsync(async (req, res, next) => {
+  const cause = await Cause.findOneAndUpdate(
+    { "volunteers._id": req.params.docId },
+    { $set: { "volunteers.$.participated": req.body.participated } },
+    { new: true }
+  );
+
+  console.log(cause);
+
+  res.status(200).json({ status: "ok", cause });
+});
+
+exports.deleteVolunteer = catchAsync(async (req, res, next) => {
+  const cause = await Cause.findByIdAndUpdate(
+    req.params.causeId,
+    {
+      $pull: { volunteers: { volunteerId: req.params.volunteerId } },
+    },
+    { new: true }
+  );
+
+  res.status(200).json({ status: "ok", cause });
+});
