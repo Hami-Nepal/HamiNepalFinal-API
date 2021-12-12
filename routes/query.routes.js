@@ -49,7 +49,9 @@ router
   );
 
 router.route("/totalDonations").get(queryController.totalDonation);
+router.route("/totalkindDonations").get(queryController.totalKindDonation);
 router.route("/totalExpenses").get(queryController.totalExpenses);
+router.route("/totalkindExpenses").get(queryController.totalKindExpenses);
 
 router.route("/average/rating").get(queryController.getAverageRating);
 

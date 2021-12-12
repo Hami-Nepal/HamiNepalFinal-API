@@ -1,6 +1,8 @@
 const Donation = require("../models/donationModel");
+const KindDonation = require("../models/kindDonationModel");
 const Volunteer = require("../models/volunteerModel");
 const Transparency = require("../models/transparencyModel");
+const KindTransparency = require("../models/kindTransparencyModel");
 const Event = require("../models/eventModel");
 const Rating = require("../models/ratingModel");
 // const User = require("../models/userModel");
@@ -180,6 +182,33 @@ exports.totalDonation = catchAsync(async (req, res, next) => {
     });
   });
 });
+//@desc Get total kind donations for all
+//GET api/v1/find/totalkinddonation
+//Public
+exports.totalKindDonation = catchAsync(async (req, res, next) => {
+  KindDonation.aggregate([
+    {
+      $project: {
+        itemWorth: 1,
+      },
+    },
+
+    {
+      $group: {
+        _id: null,
+        kinddonation: { $sum: "$itemWorth" },
+      },
+    },
+  ]).exec((err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.status(200).json({
+      status: true,
+      data: result,
+    });
+  });
+});
 //@desc Get total expenses for all
 //GET api/v1/find/totalexpenses
 //Public
@@ -195,6 +224,33 @@ exports.totalExpenses = catchAsync(async (req, res, next) => {
       $group: {
         _id: null,
         total_expenses: { $sum: "$amount" },
+      },
+    },
+  ]).exec((err, result) => {
+    if (err) {
+    }
+    res.status(200).json({
+      status: true,
+      data: result,
+    });
+  });
+});
+
+//@desc Get total kind expenses for all
+//GET api/v1/find/totalkindexpenses
+//Public
+exports.totalKindExpenses = catchAsync(async (req, res, next) => {
+  KindTransparency.aggregate([
+    {
+      $project: {
+        amount: 1,
+      },
+    },
+
+    {
+      $group: {
+        _id: null,
+        total_kind_expenses: { $sum: "$amount" },
       },
     },
   ]).exec((err, result) => {
