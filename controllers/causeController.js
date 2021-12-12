@@ -6,6 +6,7 @@ const multer = require("multer");
 const sharp = require("sharp");
 const factory = require("./handlerFactory");
 const allqueryresults = require("../middleware/allqueryresults");
+const Volunteer = require("../models/volunteerModel");
 
 //@desc Upload the picture of the cause
 //POST api/v1/causes/
@@ -117,4 +118,56 @@ exports.causeApproval = catchAsync(async (req, res, next) => {
     success: true,
     data: { cause },
   });
+});
+
+exports.volunteerParticipate = catchAsync(async (req, res, next) => {
+  const checkCause = await Cause.findById(req.params.causeId);
+
+  const volunteerExists = checkCause.volunteers.find(
+    (volunteer) => volunteer.volunteerId === req.body.volunteerId
+  );
+
+  if (volunteerExists)
+    return res.status(400).json({
+      status: "failed",
+      message: "volunteer id exists in this cause.",
+    });
+
+  const cause = await Cause.findByIdAndUpdate(
+    req.params.causeId,
+    {
+      $push: { volunteers: req.body },
+    },
+    { new: true }
+  );
+
+  res.status(200).json({ status: "ok", cause });
+});
+
+exports.updateVolunteerParticipation = catchAsync(async (req, res, next) => {
+  const cause = await Cause.findOneAndUpdate(
+    { "volunteers._id": req.params.docId },
+    { $set: { "volunteers.$.participated": req.body.participated } },
+    { new: true }
+  );
+
+  const switchMethod = req.body.participated ? "$push" : "$pull";
+
+  const volunteer = await Volunteer.findByIdAndUpdate(req.params.volunteerId, {
+    [switchMethod]: { cause_involvement: cause._id },
+  });
+
+  res.status(200).json({ status: "ok", cause });
+});
+
+exports.deleteVolunteer = catchAsync(async (req, res, next) => {
+  const cause = await Cause.findByIdAndUpdate(
+    req.params.causeId,
+    {
+      $pull: { volunteers: { volunteerId: req.params.volunteerId } },
+    },
+    { new: true }
+  );
+
+  res.status(200).json({ status: "ok", cause });
 });

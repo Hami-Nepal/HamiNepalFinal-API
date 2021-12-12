@@ -94,14 +94,8 @@ const volunteerSchema = new mongoose.Schema(
     project_worked: {
       type: String,
     },
-    event_involvement: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: "Event",
-    },
-    cause_involvement: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: "Cause",
-    },
+    event_involvement: [],
+    cause_involvement: [],
     isVerified: {
       type: Boolean,
       default: false,

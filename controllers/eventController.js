@@ -6,6 +6,7 @@ const multer = require("multer");
 const sharp = require("sharp");
 const factory = require("./handlerFactory");
 const allqueryresults = require("../middleware/allqueryresults");
+const Volunteer = require("../models/volunteerModel");
 
 //@desc Create new event
 //POST api/v1/events
@@ -120,6 +121,34 @@ exports.volunteerParticipate = catchAsync(async (req, res, next) => {
     req.params.eventId,
     {
       $push: { volunteers: req.body },
+    },
+    { new: true }
+  );
+
+  res.status(200).json({ status: "ok", event });
+});
+
+exports.updateVolunteerParticipation = catchAsync(async (req, res, next) => {
+  const event = await Event.findOneAndUpdate(
+    { "volunteers._id": req.params.docId },
+    { $set: { "volunteers.$.participated": req.body.participated } },
+    { new: true }
+  );
+
+  const switchMethod = req.body.participated ? "$push" : "$pull";
+
+  const volunteer = await Volunteer.findByIdAndUpdate(req.params.volunteerId, {
+    [switchMethod]: { event_involvement: event._id },
+  });
+
+  res.status(200).json({ status: "ok", event });
+});
+
+exports.deleteVolunteer = catchAsync(async (req, res, next) => {
+  const event = await Event.findByIdAndUpdate(
+    req.params.eventId,
+    {
+      $pull: { volunteers: { volunteerId: req.params.volunteerId } },
     },
     { new: true }
   );
