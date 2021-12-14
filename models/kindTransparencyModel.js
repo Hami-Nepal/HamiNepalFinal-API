@@ -24,6 +24,10 @@ const kindTransparencySchema = new mongoose.Schema(
       type: String,
       required: [true, "A kind transparency must have a description"],
     },
+    quantity: {
+      type: Number,
+      requried: [true, "Please Enter the item Quantity"],
+    },
     slug: { type: String },
     event: {
       type: String,

@@ -31,6 +31,10 @@ const eventSchema = new mongoose.Schema(
       type: String,
       // required: [true, "An event must have difficulties"],
     },
+    results: {
+      type: String,
+      // required: [true, "An event must have difficulties"],
+    },
     photos: {
       type: [String],
     },

@@ -30,6 +30,10 @@ const causeSchema = new mongoose.Schema(
       type: String,
       // required: [true, "A cause must have difficulties"],
     },
+    results: {
+      type: String,
+      // required: [true, "An event must have difficulties"],
+    },
     status: {
       type: String,
       enum: ["ongoing", "past"],

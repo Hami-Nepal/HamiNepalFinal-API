@@ -27,7 +27,7 @@ const upload = multer({
 exports.uploadKindDonationPhotos = upload.array("photos", []);
 
 exports.resizeKindDonationPhoto = catchAsync(async (req, res, next) => {
-  if (!req.files) return next();
+  if (!req.files || req.files === undefined) return next();
 
   req.body.photos = [];
   await Promise.all(
@@ -77,6 +77,7 @@ exports.getKdonation = catchAsync(async (req, res, next) => {
 //GET api/v1/kinddonation/:id
 //Private
 exports.updateKindness = catchAsync(async (req, res, next) => {
+  console.log(req.body);
   const kDonation = await KindDonation.findByIdAndUpdate(
     req.params.id,
     req.body,

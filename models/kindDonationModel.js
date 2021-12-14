@@ -14,7 +14,6 @@ const kindDonationSchema = new mongoose.Schema(
     },
     donerEmail: {
       type: String,
-      required: [true, "Please provide your email"],
       trim: true,
       lowercase: true,
       validate: [validator.isEmail, "Please provide a valid email"],
@@ -59,6 +58,10 @@ const kindDonationSchema = new mongoose.Schema(
     itemWorth: {
       type: Number,
       required: [true, "Please Enter the item worth amount"],
+    },
+    quantity: {
+      type: Number,
+      requried: [true, "Please Enter the item Quantity"],
     },
     photos: {
       type: [String],
