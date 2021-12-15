@@ -27,7 +27,7 @@ const upload = multer({
 exports.uploadTransparencyPhoto = upload.array("photos", []);
 
 exports.resizeTransparencyPhoto = catchAsync(async (req, res, next) => {
-  if (!req.files) return next();
+  if (!req.files || req.files.length == 0) return next();
 
   req.body.photos = [];
   await Promise.all(

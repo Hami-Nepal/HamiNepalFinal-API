@@ -27,7 +27,7 @@ const upload = multer({
 exports.uploadKindDonationPhotos = upload.array("photos", []);
 
 exports.resizeKindDonationPhoto = catchAsync(async (req, res, next) => {
-  if (!req.files || req.files === undefined) return next();
+  if (!req.files || req.files.length == 0) return next();
 
   req.body.photos = [];
   await Promise.all(

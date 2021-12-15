@@ -37,7 +37,7 @@ exports.uploadWorkImages = upload.array("photo", 10);
 // });
 
 exports.resizeWorkImages = catchAsync(async (req, res, next) => {
-  if (!req.files) return next();
+  if (!req.files || req.files.length == 0) return next();
 
   req.body.images = [];
   await Promise.all(

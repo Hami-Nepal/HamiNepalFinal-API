@@ -29,8 +29,9 @@ const upload = multer({
 exports.uploadNewsPhoto = upload.single("photo");
 
 exports.resizeNewsPhoto = catchAsync(async (req, res, next) => {
-  console.log("123");
-  if (!req.file) return next();
+  console.log(req.file);
+  if (typeof req.file === "undefined") return next();
+
   req.file.filename = `News-${Date.now()}.jpeg`;
 
   await sharp(req.file.buffer)
