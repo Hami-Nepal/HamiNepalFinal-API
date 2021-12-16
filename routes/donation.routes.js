@@ -36,5 +36,6 @@ router
   )
   .post(donationController.store);
 router.route("/:id").get(donationController.getDonation);
+router.route("/:id").delete(donationController.deleteDonations);
 
 module.exports = router;

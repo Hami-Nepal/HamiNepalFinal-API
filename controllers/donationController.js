@@ -3,6 +3,7 @@ const AppError = require("../utils/appError");
 const APIServices = require("./../utils/apiServices");
 const catchAsync = require("../utils/catchAsync");
 const axios = require("axios");
+const factory = require("./handlerFactory");
 
 //@desc Get all donations
 //GET api/v1/donations
@@ -163,3 +164,5 @@ exports.getMyDonation = catchAsync(async (req, res, next) => {
   }
   res.status(200).json({ status: "success", data: { donation } });
 });
+
+exports.deleteDonations = factory.deleteOne(Donation);
