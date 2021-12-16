@@ -10,10 +10,9 @@ const sendEmail = async (options) => {
       pass: process.env.SENDGRID_PASSWORD,
     },
   });
-
   // 2) Define the email options
   const mailOptions = {
-    from: "Hami Nepal Org <noreply@haminepal.org>",
+    from: "pawan3s",
     to: options.email,
     subject: options.subject,
     text: options.message,
@@ -25,5 +24,3 @@ const sendEmail = async (options) => {
 };
 
 module.exports = sendEmail;
-
-
