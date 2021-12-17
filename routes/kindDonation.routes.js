@@ -12,7 +12,7 @@ router
   .post(
     authController.protect,
     authController.restrictTo("admin"),
-    // kindDonationController.uploadKindDonationPhotos,
+    kindDonationController.uploadKindDonationPhotos,
     kindDonationController.resizeKindDonationPhoto,
     kindDonationController.createKindDonation
   );
