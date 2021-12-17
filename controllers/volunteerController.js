@@ -11,6 +11,7 @@ const jwt = require("jsonwebtoken");
 const Token = require("../models/tokenModel.js");
 const Joi = require("joi");
 const bcrypt = require("bcryptjs");
+const sendEmail = require("../utils/email");
 //@desc Create new Volunteer
 //GET api/v1/volunteer
 //Public
@@ -84,7 +85,7 @@ exports.createVolunteer = catchAsync(async (req, res, next) => {
 
 exports.verifyVolunteer = catchAsync(async (req, res, next) => {
   let volunteer = await Volunteer.findById(req.params.id);
-  if (volunteer.isVerified == false) {
+  if (volunteer.isVerified === false) {
     req.body.isVerified = true;
   } else {
     req.body.isVerified = false;
@@ -97,7 +98,7 @@ exports.verifyVolunteer = catchAsync(async (req, res, next) => {
   if (!updateVolunteer) {
     return next(new AppError("No volunteer found with that ID", 404));
   }
-  res.status(201).json({ status: "success", data: updateVolunteer });
+  res.status(200).json({ status: "success", data: updateVolunteer });
 });
 
 //@desc Create new Volunteer
