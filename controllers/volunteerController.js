@@ -98,23 +98,7 @@ exports.verifyVolunteer = catchAsync(async (req, res, next) => {
   if (!updateVolunteer) {
     return next(new AppError("No volunteer found with that ID", 404));
   }
-  if (updateVolunteer.isVerified === true) {
-    const message = `Hello ${updateVolunteer.first_name},\n\n You have been successfully regisistered as a volunteer in Hami Nepal Organization.\n\nThank You for connecting with us !\n\nFrom\nHami Nepal Team`;
-    try {
-      await sendEmail({
-        email: updateVolunteer.email,
-        subject: "Volunter Registeration",
-        message,
-      });
-
-      res.status(200).json({ status: "success", data: updateVolunteer });
-    } catch (err) {
-      console.log(err);
-      res
-        .status(500)
-        .json({ status: "failed", data: "Email sending failed, Try again" });
-    }
-  }
+  res.status(200).json({ status: "success", data: updateVolunteer });
 });
 
 //@desc Create new Volunteer
