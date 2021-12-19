@@ -29,7 +29,6 @@ const upload = multer({
 exports.uploadBoardMemberPhoto = upload.single("photo");
 
 exports.resizeBoardMemberPhoto = catchAsync(async (req, res, next) => {
-  console.log(req.file);
   if (!req.file) return next();
 
   req.file.filename = `boardmember-${Date.now()}.jpeg`;

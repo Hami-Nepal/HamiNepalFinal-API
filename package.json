@@ -13,7 +13,7 @@
     "Organization",
     "API"
   ],
-  "author": "Gaurav Shrestha",
+  "author": "Hash Technologies",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.1",
