@@ -77,7 +77,6 @@ exports.getKdonation = catchAsync(async (req, res, next) => {
 //GET api/v1/kinddonation/:id
 //Private
 exports.updateKindness = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   const kDonation = await KindDonation.findByIdAndUpdate(
     req.params.id,
     req.body,

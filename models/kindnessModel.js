@@ -18,7 +18,7 @@ const kindnessSchema = new mongoose.Schema(
     },
     difficulties: {
       type: String,
-      required: [true, "Act of kindness must have difficulties"],
+      // required: [true, "Act of kindness must have difficulties"],
     },
     photos: {
       type: [String],
@@ -29,23 +29,23 @@ const kindnessSchema = new mongoose.Schema(
     },
     details: {
       type: String,
-      required: [true, "Act of kindness must have a details"],
+      // required: [true, "Act of kindness must have a details"],
     },
-    volunteers:{
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: "volunteer",
+    volunteers: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "volunteer",
     },
-    results:{
-        type: String,
-        required: [true, "Act of kindness must have a results"],
+    results: {
+      type: String,
+      // required: [true, "Act of kindness must have a results"],
     },
     featured: {
       type: Boolean,
-      default:false
+      default: false,
     },
-    featured_ranking:{
-        type:Number,
-        maxlength:5
+    featured_ranking: {
+      type: Number,
+      maxlength: 5,
     },
   },
   { timestamps: true }
