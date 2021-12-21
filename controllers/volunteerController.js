@@ -128,7 +128,16 @@ exports.deleteVolunteer = factory.deleteOne(Volunteer);
 //@desc Create new Volunteer
 //PATCH api/v1/volunteer/:id
 //Private
-exports.updateVolunteer = factory.updateOne(Volunteer);
+exports.updateVolunteer = (req, res, next) => {
+  const id = req.volunteer._id.toString();
+
+  if (req.params.id !== id)
+    return next(
+      new AppError(`You are not logged in to your volunteer profile`, 401)
+    );
+
+  factory.updateOne(Volunteer)(req, res, next);
+};
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
