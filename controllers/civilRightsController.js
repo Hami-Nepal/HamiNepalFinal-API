@@ -26,7 +26,7 @@ const upload = multer({
 exports.uploadCivilRightPhoto = upload.array("photos", []);
 
 exports.resizeCivilRightPhoto = catchAsync(async (req, res, next) => {
-  if (!req.files) return next();
+  if (!req.files || req.files.length == 0) return next();
 
   req.body.photos = [];
   await Promise.all(
