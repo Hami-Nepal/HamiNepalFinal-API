@@ -169,5 +169,9 @@ exports.deleteVolunteer = catchAsync(async (req, res, next) => {
     { new: true }
   );
 
+  const volunteer = await Volunteer.findByIdAndUpdate(req.params.volunteerId, {
+    $pull: { cause_involvement: cause._id },
+  });
+
   res.status(200).json({ status: "ok", cause });
 });

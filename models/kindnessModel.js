@@ -31,10 +31,18 @@ const kindnessSchema = new mongoose.Schema(
       type: String,
       // required: [true, "Act of kindness must have a details"],
     },
-    volunteers: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: "volunteer",
-    },
+    volunteers: [
+      {
+        volunteerId: {
+          type: String,
+          unique: [true, "volunteer id should be unique in each events"],
+        },
+        participated: {
+          type: Boolean,
+          default: false,
+        },
+      },
+    ],
     results: {
       type: String,
       // required: [true, "Act of kindness must have a results"],

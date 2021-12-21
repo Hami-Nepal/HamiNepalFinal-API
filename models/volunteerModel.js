@@ -96,6 +96,7 @@ const volunteerSchema = new mongoose.Schema(
     },
     event_involvement: [],
     cause_involvement: [],
+    kindness_involvement: [],
     isVerified: {
       type: Boolean,
       default: false,

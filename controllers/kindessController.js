@@ -6,6 +6,7 @@ const multer = require("multer");
 const sharp = require("sharp");
 const factory = require("./handlerFactory");
 const allqueryresults = require("../middleware/allqueryresults");
+const Volunteer = require("../models/volunteerModel");
 
 //@desc Create new kindness
 //POST api/v1/kindness
@@ -92,3 +93,63 @@ exports.getFeatured = async (req, res, next) => {
 
   res.status(200).json({ status: "ok", featured });
 };
+
+exports.volunteerParticipate = catchAsync(async (req, res, next) => {
+  const checkKindness = await ActOfKindness.findById(req.params.kindnessId);
+
+  const volunteerExists = checkKindness.volunteers.find(
+    (volunteer) => volunteer.volunteerId === req.body.volunteerId
+  );
+
+  if (volunteerExists)
+    return res.status(400).json({
+      status: "failed",
+      message: "volunteer id exists in this act of kindness.",
+    });
+
+  const kindness = await ActOfKindness.findByIdAndUpdate(
+    req.params.kindnessId,
+    {
+      $push: { volunteers: req.body },
+    },
+    { new: true }
+  );
+
+  res.status(200).json({ status: "ok", kindness });
+});
+
+exports.updateVolunteerParticipation = catchAsync(async (req, res, next) => {
+  const kindness = await ActOfKindness.findOneAndUpdate(
+    { "volunteers._id": req.params.docId },
+    { $set: { "volunteers.$.participated": req.body.participated } },
+    { new: true }
+  );
+
+  const switchMethod = req.body.participated ? "$push" : "$pull";
+
+  const volunteer = await Volunteer.findByIdAndUpdate(req.params.volunteerId, {
+    [switchMethod]: { kindness_involvement: kindness._id },
+  });
+
+  res.status(200).json({ status: "ok", kindness });
+});
+
+exports.deleteVolunteer = catchAsync(async (req, res, next) => {
+  const kindness = await ActOfKindness.findByIdAndUpdate(
+    req.params.kindnessId,
+    {
+      $pull: { volunteers: { volunteerId: req.params.volunteerId } },
+    },
+    { new: true }
+  );
+
+  const volunteer = await Volunteer.findByIdAndUpdate(
+    req.params.volunteerId,
+    {
+      $pull: { kindness_involvement: kindness._id },
+    },
+    { new: true }
+  );
+
+  res.status(200).json({ status: "ok", kindness });
+});
