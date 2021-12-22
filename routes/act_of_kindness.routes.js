@@ -40,4 +40,24 @@ router
     kindnessController.deleteKindness
   );
 
+router
+  .route("/volunteers/:kindnessId")
+  .post(authController.protect, kindnessController.volunteerParticipate);
+
+router
+  .route("/volunteers/:docId/update/:volunteerId")
+  .patch(
+    authController.protect,
+    authController.restrictTo("admin"),
+    kindnessController.updateVolunteerParticipation
+  );
+
+router
+  .route("/volunteers/:kindnessId/delete/:volunteerId")
+  .patch(
+    authController.protect,
+    authController.restrictTo("admin"),
+    kindnessController.deleteVolunteer
+  );
+
 module.exports = router;
