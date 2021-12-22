@@ -23,7 +23,7 @@ const kindDonationSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ["cause", "event"],
+      enum: ["cause", "event", "kindness"],
       required: [true, "Please specify your donation category"],
     },
     event: {
@@ -39,6 +39,10 @@ const kindDonationSchema = new mongoose.Schema(
       required: false,
     },
     cause_name: {
+      type: String,
+      required: false,
+    },
+    kindness: {
       type: String,
       required: false,
     },

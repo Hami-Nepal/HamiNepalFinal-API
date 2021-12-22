@@ -9,7 +9,7 @@ const transparencySchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["cause", "event"],
+      enum: ["cause", "event", "kindness"],
       required: [true, "A transparency must have a type"],
     },
     photos: {
@@ -38,6 +38,10 @@ const transparencySchema = new mongoose.Schema(
       required: false,
     },
     cause_name: {
+      type: String,
+      required: false,
+    },
+    kindness: {
       type: String,
       required: false,
     },

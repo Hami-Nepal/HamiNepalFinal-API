@@ -9,7 +9,7 @@ const kindTransparencySchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["cause", "event"],
+      enum: ["cause", "event", "kindness"],
       required: [true, "A Kind transparency must have a type"],
     },
     photos: {
@@ -42,6 +42,10 @@ const kindTransparencySchema = new mongoose.Schema(
       required: false,
     },
     cause_name: {
+      type: String,
+      required: false,
+    },
+    kindness: {
       type: String,
       required: false,
     },
