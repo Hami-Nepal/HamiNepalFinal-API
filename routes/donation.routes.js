@@ -31,6 +31,10 @@ router
         path: "cause",
         select: "name status balance",
       },
+      {
+        path: "kindness",
+        select: "title",
+      },
     ]),
     donationController.index
   )
