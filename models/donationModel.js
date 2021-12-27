@@ -6,10 +6,7 @@ const donationSchema = new mongoose.Schema(
     //   type: String,
     //   required: [true, "Please enter a type"],
     // },
-    slug: {
-      type: String,
-      required: [true, "Please enter a slug"],
-    },
+
     is_anonymous: {
       type: Boolean,
     },
@@ -41,6 +38,10 @@ const donationSchema = new mongoose.Schema(
     kindness: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "kindness",
+    },
+    volunteer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Volunteer",
     },
     // user: {
     //   type: mongoose.Schema.Types.ObjectId,

@@ -9,13 +9,7 @@ router.route("/causes/totalDonations").get(
   // authController.restrictTo("admin"),
   queryController.causeDonationAmount
 );
-router
-  .route("/events/totalDonations")
-  .get(
-    authController.protect,
-    authController.restrictTo("admin"),
-    queryController.eventDonationAmount
-  );
+router.route("/events/totalDonations").get(queryController.eventDonationAmount);
 
 // router
 //   .route("/causes/totalDonations")
@@ -24,21 +18,9 @@ router
 //     authController.restrictTo("admin"),
 //     queryController.eventDonationAmount
 //   );
-router
-  .route("/events/topdonar")
-  .get(
-    authController.protect,
-    authController.restrictTo("admin"),
-    queryController.topEventDonar
-  );
+router.route("/events/topdonar").get(queryController.topEventDonar);
 
-router
-  .route("/causes/topdonar")
-  .get(
-    authController.protect,
-    authController.restrictTo("admin"),
-    queryController.topCauseDonar
-  );
+router.route("/causes/topdonar").get(queryController.topCauseDonar);
 
 router
   .route("/allevents/totaldonation")

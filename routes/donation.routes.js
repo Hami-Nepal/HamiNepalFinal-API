@@ -35,6 +35,14 @@ router
         path: "kindness",
         select: "title",
       },
+      {
+        path: "kindness",
+        select: "title",
+      },
+      {
+        path: "volunteer",
+        select: "first_name last_name phone email photo",
+      },
     ]),
     donationController.index
   )
