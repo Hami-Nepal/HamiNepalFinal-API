@@ -8,7 +8,7 @@ const newsSchema = new mongoose.Schema(
     },
     newsType: {
       type: String,
-      enum: ["National", "International"],
+      enum: ["national", "international"],
       required: [true, "News type is required"],
     },
     summary: {
