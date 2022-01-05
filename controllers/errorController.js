@@ -7,11 +7,11 @@ const handleCastErrorDB = (err) => {
 };
 
 const handleDuplicateFieldsDB = (err) => {
-  const value = err?.errmsg?.match(/(["'])(\\?.)*?\1/)[0];
+  // const value = err?.msg?.match(/(["'])(\\?.)*?\1/)[0];
   // console.log(value);
 
-  const message = `Duplicate field value: ${value}. Please try using some other value!`;
-  return new AppError(message, 400);
+  // const message = `Duplicate field value: ${value}. Please try using some other value!`;
+  return new AppError(err, 400);
 };
 
 const handleValidationErrorDB = (err) => {
