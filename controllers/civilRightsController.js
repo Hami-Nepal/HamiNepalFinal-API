@@ -45,7 +45,6 @@ exports.resizeCivilRightPhoto = catchAsync(async (req, res, next) => {
       );
     })
   );
-
   next();
 });
 
