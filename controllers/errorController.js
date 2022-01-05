@@ -11,7 +11,7 @@ const handleDuplicateFieldsDB = (err) => {
   // console.log(value);
 
   // const message = `Duplicate field value: ${value}. Please try using some other value!`;
-  return new AppError(err, 400);
+  return new AppError(JSON.stringify(err), 400);
 };
 
 const handleValidationErrorDB = (err) => {
