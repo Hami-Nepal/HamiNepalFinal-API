@@ -24,7 +24,8 @@ const userSchema = new mongoose.Schema({
   },
   photo: {
     type: String,
-    default: "no_img.jpeg",
+    default:
+      "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png",
   },
   otp: {
     type: Number,

@@ -33,39 +33,39 @@ const createSendToken = (user, statusCode, req, res) => {
 //@desc Create new event
 //POST api/v1/events
 //Private
-const multerStorage = multer.memoryStorage();
+// const multerStorage = multer.memoryStorage();
 
-const multerFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith("image")) {
-    cb(null, true);
-  } else {
-    cb(new AppError("Not an image! Please upload only images.", 400), false);
-  }
-};
+// const multerFilter = (req, file, cb) => {
+//   if (file.mimetype.startsWith("image")) {
+//     cb(null, true);
+//   } else {
+//     cb(new AppError("Not an image! Please upload only images.", 400), false);
+//   }
+// };
 
-const upload = multer({
-  storage: multerStorage,
-  fileFilter: multerFilter,
-});
+// const upload = multer({
+//   storage: multerStorage,
+//   fileFilter: multerFilter,
+// });
 
-exports.uploadUserPhoto = upload.single("photo");
+// exports.uploadUserPhoto = upload.single("photo");
 
-exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
-  if (!req.file) return next();
+// exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
+//   if (!req.file) return next();
 
-  req.file.filename = `user-${Date.now()}.jpeg`;
+//   req.file.filename = `user-${Date.now()}.jpeg`;
 
-  await sharp(req.file.buffer)
-    .toFormat("jpeg")
-    .jpeg({ quality: 90 })
-    .toFile(`public/img/user/${req.file.filename}`);
+//   await sharp(req.file.buffer)
+//     .toFormat("jpeg")
+//     .jpeg({ quality: 90 })
+//     .toFile(`public/img/user/${req.file.filename}`);
 
-  req.body.photo = `${req.protocol}://${req.get("host")}/img/user/${
-    req.file.filename
-  }`;
+//   req.body.photo = `${req.protocol}://${req.get("host")}/img/user/${
+//     req.file.filename
+//   }`;
 
-  next();
-});
+//   next();
+// });
 
 exports.signup = catchAsync(async (req, res, next) => {
   User.findOne({ email: req.body.email }, function (err, user) {
@@ -89,7 +89,6 @@ exports.signup = catchAsync(async (req, res, next) => {
         lastname: req.body.lastname,
         email: req.body.email,
         password: req.body.password,
-        photo: req.body.photo,
       });
 
       user.save(function (err) {
@@ -118,17 +117,16 @@ exports.signup = catchAsync(async (req, res, next) => {
               subject: "Account Verification Link",
               message,
             });
-
-            res
-              .status(200)
-              .send(
+            res.status(200).json({
+              status: "true",
+              msg:
                 "A verification email has been sent to " +
-                  user.email +
-                  ". It will be expired after one day. If you did not get verification Email click on resend token."
-              );
+                `"${user.email}"` +
+                ". It will be expired after one day. If you did not get verification Email, contact our team.",
+            });
           } catch (err) {
             res.status(500).send({
-              msg: "Technical Issue!, Please click on resend to verify your Email.",
+              msg: "Technical Issue!, Couldnot send Verification email, contact our administration.",
               err,
             });
           }

@@ -5,6 +5,11 @@ const sendEmail = async (options) => {
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
+    secure: false,
+    tls: {
+      minVersion: "TLSv1", // -> This is the line that solved my problem
+      rejectUnauthorized: false,
+    },
     auth: {
       user: process.env.SENDGRID_USERNAME,
       pass: process.env.SENDGRID_PASSWORD,
@@ -12,8 +17,8 @@ const sendEmail = async (options) => {
   });
   // 2) Define the email options
   const mailOptions = {
-    from: "Hami Nepal Org <dev@haminepal.org>",
-    
+    from: "Hami Nepal Org <admin@haminepal.org>",
+
     to: options.email,
     subject: options.subject,
     text: options.message,
