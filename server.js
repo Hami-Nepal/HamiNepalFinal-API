@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-require('dotenv').config();
+require("dotenv").config();
 
-const cluster = require('cluster');
-const http = require('http');
-const numCPUs = require('os').cpus().length;
-const process = require('process');
+const cluster = require("cluster");
+const http = require("http");
+const numCPUs = require("os").cpus().length;
+const process = require("process");
 const PORT = process.env.PORT || 5000;
 
 if (cluster.isPrimary) {
@@ -42,7 +42,7 @@ if (cluster.isPrimary) {
       console.log(err);
     });
 
-  http.createServer(require('./app')).listen(PORT, err => {
+  require("./app").listen(PORT, (err) => {
     if (err) return console.log(err);
     else console.log(`Server Running => ${PORT}`);
   });
@@ -57,4 +57,3 @@ if (cluster.isPrimary) {
 
   console.log(`Worker ${process.pid} started`);
 }
-

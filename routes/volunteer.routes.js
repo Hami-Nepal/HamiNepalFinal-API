@@ -38,5 +38,7 @@ router
   );
 
 router.route("/volunteerlogin").post(volunteerController.VolunteerLogin);
+router.post("/forgotPassword", volunteerController.forgotPassword);
+router.put("/resetPassword/:token", authController.resetPassword);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
+const crypto = require("crypto");
 
 const volunteerSchema = new mongoose.Schema(
   {
@@ -30,6 +31,9 @@ const volunteerSchema = new mongoose.Schema(
       minlength: [8, "Password must be minimum of 8 lengths"],
       select: false,
     },
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
     age: {
       type: Number,
       // required: [true, "A volunteer must provide an age"],
@@ -121,6 +125,13 @@ volunteerSchema.pre("save", async function (next) {
   next();
 });
 
+volunteerSchema.pre("save", function (next) {
+  if (!this.isModified("password") || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
 volunteerSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   if (this.passwordChangedAt) {
     const changedTimestamp = parseInt(
@@ -133,6 +144,20 @@ volunteerSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
 
   // False means NOT changed
   return false;
+};
+volunteerSchema.methods.createPasswordResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  this.passwordResetToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  // console.log({ resetToken }, this.passwordResetToken);
+
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
 };
 
 const Volunteer = mongoose.model("Volunteer", volunteerSchema);

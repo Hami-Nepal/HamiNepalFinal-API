@@ -159,23 +159,6 @@ const createSendToken = (volunteer, statusCode, req, res) => {
 };
 
 exports.VolunteerLogin = catchAsync(async (req, res, next) => {
-  const schema = Joi.object({
-    password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
-    email: Joi.string().email({
-      minDomainSegments: 2,
-      tlds: { allow: ["com", "net"] },
-    }),
-  });
-
-  const { error } = schema.validate({
-    email: req.body.email,
-    password: req.body.password,
-  });
-
-  if (error) {
-    return next(new AppError(`${error.details[0].message}`, 403));
-  }
-
   const { email, password } = req.body;
 
   // 1) Check if email and password exist
@@ -249,4 +232,71 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // res.locals.user = currentUser;
   next();
+});
+
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  // 1) Get user based on POSTed email
+  const volunteer = await Volunteer.findOne({ email: req.body.email });
+  if (!volunteer) {
+    return next(new AppError("There is no volunteer with email address.", 404));
+  }
+
+  // 2) Generate the random reset token
+  const resetToken = volunteer.createPasswordResetToken();
+  await volunteer.save({ validateBeforeSave: false });
+
+  // 3) Send it to user's email
+  try {
+    const resetURL = `${req.protocol}://${req.get(
+      "host"
+    )}/api/v1/users/resetPassword/${resetToken}`;
+
+    const message = `Hello ${volunteer.first_name} ${volunteer.last_name}\n\n Forgot Your Password? Submit a Patch Request with your new password and PasswordConfirm to : ${resetURL} \n If you did not send this request , please ignore this message.\n\n Thank You!!\nTeam Hami Nepal`;
+
+    await sendEmail({
+      email: volunteer.email,
+      subject: "Your password reset token valid for 10 minutes.",
+      message,
+    });
+    res.status(200).json({
+      status: "success",
+      message: "Token sent to email!, Please check your email",
+    });
+  } catch (err) {
+    volunteer.passwordResetToken = undefined;
+    volunteer.passwordResetExpires = undefined;
+    await volunteer.save({ validateBeforeSave: false });
+
+    return next(
+      new AppError("There was an error sending the email. Try again later!"),
+      500
+    );
+  }
+});
+
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  // 1) Get user based on the token
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
+
+  const volunteer = await Volunteer.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() },
+  });
+
+  // 2) If token has not expired, and there is user, set the new password
+  if (!volunteer) {
+    return next(new AppError("Token is invalid or has expired", 400));
+  }
+  volunteer.password = req.body.password;
+  volunteer.passwordConfirm = req.body.passwordConfirm;
+  volunteer.passwordResetToken = undefined;
+  volunteer.passwordResetExpires = undefined;
+  await volunteer.save();
+
+  // 3) Update changedPasswordAt property for the user
+  // 4) Log the user in, send JWT
+  createSendToken(volunteer, 200, req, res);
 });
