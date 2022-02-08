@@ -238,7 +238,9 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on POSTed email
   const volunteer = await Volunteer.findOne({ email: req.body.email });
   if (!volunteer) {
-    return next(new AppError("There is no volunteer with email address.", 404));
+    return next(
+      new AppError("There is no volunteer with this email address.", 404)
+    );
   }
 
   // 2) Generate the random reset token
@@ -247,9 +249,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   // 3) Send it to user's email
   try {
-    const resetURL = `${req.protocol}://${req.get(
-      "host"
-    )}/api/v1/users/resetPassword/${resetToken}`;
+    const resetURL = `http://localhost:3000/resetPassword/${resetToken}`;
 
     const message = `Hello ${volunteer.first_name} ${volunteer.last_name}\n\n Forgot Your Password? Submit a Patch Request with your new password and PasswordConfirm to : ${resetURL} \n If you did not send this request , please ignore this message.\n\n Thank You!!\nTeam Hami Nepal`;
 
@@ -266,6 +266,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     volunteer.passwordResetToken = undefined;
     volunteer.passwordResetExpires = undefined;
     await volunteer.save({ validateBeforeSave: false });
+    console.log(err);
 
     return next(
       new AppError("There was an error sending the email. Try again later!"),

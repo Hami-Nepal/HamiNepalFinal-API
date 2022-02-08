@@ -31,6 +31,10 @@ const kindnessSchema = new mongoose.Schema(
       type: String,
       // required: [true, "Act of kindness must have a details"],
     },
+    balance: {
+      type: Number,
+      required: true,
+    },
     volunteers: [
       {
         volunteerId: {
