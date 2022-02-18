@@ -35,6 +35,10 @@ const kindnessSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
     volunteers: [
       {
         volunteerId: {

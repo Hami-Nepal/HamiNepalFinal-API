@@ -18,7 +18,7 @@ router
   )
   .post(
     authController.protect,
-    authController.restrictTo("admin"),
+    // authController.restrictTo("admin"),
     kindnessController.uploadKindnessPhoto,
     kindnessController.resizeKindnessPhoto,
     kindnessController.createKindness
